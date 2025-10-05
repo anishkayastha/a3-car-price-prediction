@@ -1,0 +1,26 @@
+version: '3.9'
+
+services:
+  web:
+    command: python app/app.py
+    image: zagreus08/car-price-predict:latest
+    environment:
+      - HOST=0.0.0.0
+      - PORT=8050
+      - PYTHONUNBUFFERED=1
+      - PYTHONPATH=/app
+    restart: unless-stopped
+    labels:
+      - traefik.enable=true
+      - traefik.http.services.web-st125988.loadbalancer.server.port=8050
+      - traefik.http.routers.web-st125988.rule=Host(`st125988.ml.brain.cs.ait.ac.th`)
+      - traefik.http.routers.web-st125988.entrypoints=websecure
+      - traefik.http.routers.web-st125988.tls.certresolver=myresolver
+    networks:
+      - default
+      - traefik_default
+
+networks:
+  default:
+  traefik_default:
+    external: true
