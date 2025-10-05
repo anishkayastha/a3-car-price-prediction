@@ -66,7 +66,7 @@ external_stylesheets = [
 ]
 
 app = dash.Dash(__name__, suppress_callback_exceptions=True, external_stylesheets=external_stylesheets)
-app.title = "Car Price Analytics - st126010"
+app.title = "Car Price Analytics - st125988"
 
 # Add responsive meta tag
 app.index_string = '''
