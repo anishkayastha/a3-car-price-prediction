@@ -1,252 +1,344 @@
-# Car Price Classification - Assignment 3
+# 🚗 Car Price Classification
 
-This project implements a multinomial logistic regression classifier for car price prediction, converting the regression problem into a 4-class classification task. The project includes MLflow experiment tracking, model deployment, and a modern responsive Dash web application with CI/CD pipeline.
+> **Assignment 3**: Multinomial Logistic Regression with MLflow & CI/CD  
+> Transforming regression into intelligent 4-class classification
 
-## 📋 Project Overview
+[![Python](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
+[![MLflow](https://img.shields.io/badge/MLflow-Tracking-orange.svg)](http://mlflow.ml.brain.cs.ait.ac.th/)
+[![CI/CD](https://img.shields.io/badge/CI%2FCD-GitHub%20Actions-success.svg)](https://github.com/features/actions)
+[![License](https://img.shields.io/badge/License-Academic-lightgrey.svg)]()
 
-### Objectives
-1. **Classification Implementation**: Convert car price prediction from regression to 4-class classification
-2. **Custom Metrics**: Implement accuracy, precision, recall, and F1-score from scratch
-3. **Ridge Regularization**: Add L2 penalty option to logistic regression
-4. **MLflow Integration**: Log experiments to remote MLflow server
-5. **Model Deployment**: Deploy best model using MLflow Model Registry
-6. **CI/CD Pipeline**: Automated testing and deployment with GitHub Actions
-7. **Modern Web App**: Responsive dashboard with model comparisons across all assignments
+---
 
-### Price Classes
-- **Class 0**: Low (₹0 - ₹25 Lakhs)
-- **Class 1**: Medium (₹25 - ₹50 Lakhs)  
-- **Class 2**: High (₹50 Lakhs - ₹1 Crore)
-- **Class 3**: Premium (Above ₹1 Crore)
+## 🎯 What This Project Does
 
-## 🏗️ Project Structure
+This project converts car price prediction from a **regression problem** into a **4-class classification task**, implementing everything from scratch including metrics, regularization, and deployment infrastructure.
+
+### 💡 Key Highlights
+
+- ✨ **Custom Implementation**: Logistic regression built from ground up
+- 📊 **Complete Metrics Suite**: Accuracy, precision, recall, F1 (all from scratch)
+- 🔧 **Ridge Regularization**: L2 penalty for better generalization  
+- 📈 **MLflow Tracking**: Remote experiment logging & model registry
+- 🚀 **Production Ready**: Docker + CI/CD with automated testing
+- 🎨 **Modern Web App**: Responsive Dash dashboard with comparisons
+
+---
+
+## 💰 Price Classification
+
+| Class | Label | Price Range (INR) | Description |
+|-------|-------|-------------------|-------------|
+| 🟢 0 | Low | ₹0 - ₹25L | Entry-level vehicles |
+| 🟡 1 | Medium | ₹25L - ₹50L | Mid-range cars |
+| 🟠 2 | High | ₹50L - ₹1Cr | Luxury vehicles |
+| 🔴 3 | Premium | Above ₹1Cr | Ultra-luxury cars |
+
+---
+
+## 📁 Project Structure
 
 ```
 A3/
-├── app/
-│   └── app.py                    # Modern responsive Dash web application
-├── .github/
+│
+├── 📱 app/
+│   └── app.py                    # Modern Dash web application
+│
+├── 🔄 .github/
 │   └── workflows/
-│       └── ci-cd.yml            # GitHub Actions CI/CD pipeline
-├── LogisticRegression.py        # Custom logistic regression implementation
-├── A3_car_price_classification.ipynb  # Main notebook with experiments
-├── Predicting_Car_Price1.ipynb # A1 assignment notebook
-├── Predict_Car_Price2.ipynb    # A2 assignment notebook
-├── test_model.py               # Unit tests for the model
-├── Cars.csv                    # Dataset
-├── requirements.txt            # Python dependencies
-├── Dockerfile                  # Docker configuration
-├── model_artifacts.pkl         # Trained model and preprocessing components
-├── MLFLOW_experiment.png       # MLflow experiment screenshot
-├── MLFLOW_scores.png          # MLflow scores screenshot
-├── Comparison.png             # Model comparison visualization
-└── README.md                   # This file
+│       └── ci-cd.yml            # CI/CD automation
+│
+├── 🧠 LogisticRegression.py     # Custom model implementation
+├── 📓 A3_CarPrediction.ipynb  # Main experiments
+│
+├── 🧪 test_model.py             # Unit tests
+├── 📊 Cars.csv                  # Dataset
+├── 🔧 requirements.txt          # Dependencies
+├── 🐳 Dockerfile                # Container config
+├── 💾 model_artifacts.pkl       # Trained model
+
 ```
 
-## 🚀 Getting Started
+---
+
+## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.9+
-- Docker (for containerization)
-- Git (for version control)
+
+```bash
+Python 3.9+
+Docker (optional)
+Git
+```
 
 ### Installation
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd A3
-   ```
+```bash
+# 1️⃣ Clone the repository
+git clone <your-repo-url>
+cd A3
 
-2. **Create virtual environment**
-   ```bash
-   python -m venv .venv
-   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
-   ```
+# 2️⃣ Create virtual environment
+python -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
 
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
+# 3️⃣ Install dependencies
+pip install -r requirements.txt
+```
 
-## 📊 Usage
+### Running the Project
 
-### 1. Training the Model
+**Option A: Run Web App Directly**
+```bash
+cd app
+python app.py
+# Open browser to http://localhost:8050
+```
 
-Run the Jupyter notebook to train the model and log experiments:
+**Option B: Use Docker**
+```bash
+docker build -t car-price-classifier .
+docker run -p 8050:8050 car-price-classifier
+```
 
+**Option C: Train Model**
 ```bash
 jupyter notebook A3_car_price_classification.ipynb
 ```
 
-### 2. Running Unit Tests
-
-Execute the unit tests to verify model functionality:
-
+**Option D: Run Tests**
 ```bash
-python -m pytest test_model.py -v
+pytest test_model.py -v
 ```
 
-### 3. Running the Web Application
+---
 
-Start the modern Dash web application:
+## 📊 Model Performance
 
-```bash
-cd app
-python app.py
+### Assignment Evolution
+
+| Assignment | Type | Problem | Best Score | Key Innovation |
+|------------|------|---------|------------|----------------|
+| **A1** | Linear Regression | Regression | R² = 0.6040 | Basic pipeline |
+| **A2** | Enhanced Regression | Regression | R² = 0.8472 | Polynomial + Lasso |
+| **A3** | Logistic Classification | Classification | **Accuracy = 70.48%** | Custom metrics + MLflow |
+
+### 🏆 Best Model Configuration
+
+```python
+Configuration:
+├── Penalty: None
+├── Initialization: Zeros
+├── Learning Rate: 0.01
+├── Accuracy: 70.48%
+└── Convergence: Stable
 ```
 
-Access the application at `http://localhost:8050`
+### Key Insights
 
-**Features:**
-- 📊 **Model Comparison**: Compare performance across A1, A2, and A3 assignments
-- 🔮 **Price Prediction**: Interactive car price class prediction
-- 📈 **Data Analytics**: Visualizations and insights from the dataset
+- ✅ Zero initialization > Xavier initialization
+- ✅ Higher learning rates (0.01) improved convergence
+- ✅ Ridge regularization showed minimal impact
+- ✅ Feature engineering was crucial for performance
 
-### 4. Docker Deployment
+---
 
-Build and run the Docker container:
-
-```bash
-# Build the image
-docker build -t car-price-classifier .
-
-# Run the container
-docker run -p 8050:8050 car-price-classifier
-```
-
-## 🔬 Model Implementation
+## 🔬 Technical Implementation
 
 ### Custom Logistic Regression Features
 
-The `LogisticRegression` class implements:
+```python
+class LogisticRegression:
+    """
+    Multinomial logistic regression with ridge regularization
+    """
+    ✓ One-vs-rest classification
+    ✓ Ridge (L2) penalty
+    ✓ Multiple initialization methods
+    ✓ Custom metric calculations
+```
 
-- **Multinomial Classification**: One-vs-rest approach for 4-class problem
-- **Ridge Regularization**: Optional L2 penalty with configurable lambda
-- **Weight Initialization**: Zeros or Xavier initialization methods
-- **Custom Metrics**: From-scratch implementation of classification metrics
+### Metrics (All From Scratch)
 
-### Classification Metrics
+| Metric | Formula | Purpose |
+|--------|---------|---------|
+| **Accuracy** | `correct / total` | Overall correctness |
+| **Precision** | `TP / (TP + FP)` | Positive prediction accuracy |
+| **Recall** | `TP / (TP + FN)` | True positive detection rate |
+| **F1-Score** | `2 × (P × R) / (P + R)` | Balanced performance |
+| **Macro Avg** | `mean(metrics)` | Unweighted class average |
+| **Weighted Avg** | `Σ(weight × metric)` | Class-balanced average |
 
-All metrics implemented from scratch:
+---
 
-- **Accuracy**: `correct_predictions / total_predictions`
-- **Precision**: `TP / (TP + FP)` per class
-- **Recall**: `TP / (TP + FN)` per class  
-- **F1-Score**: `2 * precision * recall / (precision + recall)` per class
-- **Macro Averaging**: Simple average across classes
-- **Weighted Averaging**: Class-frequency weighted average
+## 🌐 Web Application
 
-## 📈 Assignment Evolution & Results
+### Features
 
-### Assignment Progression
-| Assignment | Model Type | Problem Type | Best Score | Key Features |
-|------------|------------|--------------|------------|--------------|
-| **A1** | Linear Regression | Regression | R² = 0.6040 | Basic implementation + proper pipeline |
-| **A2** | Enhanced Linear Regression | Regression | R² = 0.8472 | Polynomial features + Lasso + proper pipeline |
-| **A3** | Logistic Classification | Classification | Accuracy = 70.48% | Custom metrics + Ridge penalty + MLflow + CI/CD + proper pipeline |
+#### 📊 **Model Comparison Tab**
+- Visual performance comparison (A1, A2, A3)
+- Interactive charts & metrics
+- Evolution timeline
 
-### A3 Best Model Configuration
-- **Penalty**: None (no regularization needed)
-- **Initialization**: Zeros
-- **Learning Rate**: 0.01
-- **Accuracy**: 70.48%
-- **Macro F1**: Improved performance
+#### 🔮 **Price Prediction Tab**
+- User-friendly input form
+- Real-time class prediction
+- Confidence visualization
 
-### Key Findings
-1. Zeros initialization outperformed Xavier initialization
-2. Higher learning rates (0.01) achieved better convergence
-3. Ridge regularization didn't improve performance significantly
-4. Proper feature engineering was key to performance improvement
+#### 📈 **Data Analytics Tab**
+- Price distribution charts
+- Feature correlation heatmap
+- Year-wise trends
+
+### Design Highlights
+
+- 📱 **Fully Responsive** - Works on all devices
+- 🎨 **Modern UI** - Gradients, shadows, smooth transitions
+- ⚡ **Fast & Interactive** - Real-time updates
+- 👤 **Branded** - Student ID displayed prominently
+
+---
 
 ## 🔄 CI/CD Pipeline
 
-The GitHub Actions workflow automatically:
+### Automated Workflow
 
-1. **Testing Phase**:
-   - Sets up Python environment
-   - Installs dependencies
-   - Runs unit tests
-   - Validates Dash app imports
+```mermaid
+graph LR
+    A[Push Code] --> B[Run Tests]
+    B --> C{Tests Pass?}
+    C -->|Yes| D[Build Docker]
+    C -->|No| E[Notify Failure]
+    D --> F[Deploy App]
+```
 
-2. **Deployment Phase** (on main branch):
-   - Builds Docker image
-   - Tests container functionality
-   - Provides deployment confirmation
+### What Gets Tested
 
-## 🌐 MLflow Integration
+- ✅ Python environment setup
+- ✅ Dependency installation
+- ✅ Unit test execution
+- ✅ Dash app validation
+- ✅ Docker build process
 
-### Experiment Tracking
-- **Server**: `http://mlflow.ml.brain.cs.ait.ac.th/`
-- **Experiment Name**: `st125988-a3`
-- **Model Registry**: `st125988-a3-model`
+### Trigger Events
 
-### Logged Metrics
-- Accuracy, Precision, Recall, F1-score
-- Macro and weighted averages
-- Model hyperparameters
-- Training artifacts
+- Push to `main` or `master` branch
+- Pull requests
+- Manual workflow dispatch
+
+---
+
+## 📈 MLflow Integration
+
+### Connection Details
+
+```yaml
+Server: http://mlflow.ml.brain.cs.ait.ac.th/
+Experiment: st125988-a3
+Model Name: st125988-a3-model
+Stage: Staging
+```
+
+### Tracked Information
+
+- 📊 All performance metrics (accuracy, F1, precision, recall)
+- 🔧 Hyperparameters (learning rate, lambda, initialization)
+- 💾 Model artifacts & preprocessing pipelines
+- 📸 Visualization plots
+- ⏱️ Training time & iterations
+
+---
 
 ## 🧪 Testing
 
-### Unit Tests Coverage
-- Input validation and format checking
-- Output shape verification  
-- Model consistency testing
-- Error handling for invalid inputs
+### Test Coverage
 
-Run tests with:
-```bash
-python -m pytest test_model.py -v --tb=short
+```python
+✓ test_model_accepts_expected_input()
+  - Validates input format
+  - Checks data types
+  
+✓ test_model_output_has_expected_shape()
+  - Verifies prediction shape
+  - Validates class labels
+  - Ensures integer outputs
 ```
 
-## 📱 Modern Web Application Features
+### Run Tests
 
-The enhanced Dash app provides:
+```bash
+# Verbose output
+pytest test_model.py -v
 
-### 📊 Model Comparison Tab
-- Performance comparison across all three assignments
-- Interactive charts showing model evolution
-- Detailed comparison table with key metrics
+# With coverage
+pytest test_model.py --cov=LogisticRegression
 
-### 🔮 Price Prediction Tab
-- Interactive car feature input form
-- Real-time price class prediction
-- Modern, responsive design with visual feedback
-
-### 📈 Data Analytics Tab
-- Price distribution visualization
-- Feature correlation matrix
-- Price trends analysis by year
-
-### Design Features
-- **Responsive Design**: Works on desktop, tablet, and mobile
-- **Modern UI**: Clean, professional interface with gradients and shadows
-- **Interactive Elements**: Hover effects, smooth transitions
-- **Student Branding**: Displays "st126010 - Htut Ko Ko" prominently
-
-## 🐳 Docker Configuration
-
-The Dockerfile:
-- Uses Python 3.10 slim base image
-- Installs system dependencies (gcc for compilation)
-- Copies requirements and installs Python packages
-- Exposes port 8050 for the web application
-- Sets environment variables for production
-
-## 📄 License
-
-This project is part of an academic assignment for machine learning coursework.
-
-## 🙋‍♂️ Support
-
-For questions about this implementation:
-- Check the Jupyter notebooks for detailed explanations
-- Review the MLflow experiments for performance comparisons
-- Run unit tests to verify functionality
+# Stop on first failure
+pytest test_model.py -x
+```
 
 ---
 
-This project demonstrates the complete machine learning pipeline from data preprocessing and model training to deployment and monitoring, following best practices for reproducible ML workflows.
+## 🐳 Docker Deployment
+
+### Container Specs
+
+```dockerfile
+Base Image: python:3.10-slim
+Port: 8050
+Environment: Production
+Size: Optimized (~200MB)
+```
+
+### Build & Run
+
+```bash
+# Build
+docker build -t car-classifier:latest .
+
+# Run with port mapping
+docker run -p 8050:8050 car-classifier:latest
+
+# Run in background
+docker run -d -p 8050:8050 --name car-app car-classifier:latest
+
+# View logs
+docker logs -f car-app
+```
 
 ---
+
+## 📚 Documentation
+
+For detailed information:
+
+- 📓 **Notebooks**: Step-by-step explanations in Jupyter notebooks
+- 📊 **MLflow**: View experiments at the MLflow server
+- 🧪 **Tests**: Run unit tests to understand functionality
+- 💻 **Code**: Well-commented implementation files
+
+
+---
+
+## 📝 License
+
+This project is part of academic coursework. All rights reserved for educational purposes.
+
+---
+
+## 🙋‍♂️ Support & Questions
+
+Need help? Check these resources in order:
+
+1. 📖 Read the Jupyter notebooks for detailed explanations
+2. 🔍 Review MLflow experiments for performance insights
+3. 🧪 Run unit tests to verify your setup
+4. 💬 Contact course instructors for assignment-specific questions
+
+---
+
+<div align="center">
+
+*Demonstrating end-to-end ML pipeline from data to deployment*
+
+</div>
